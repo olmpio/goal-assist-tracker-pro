@@ -2,6 +2,7 @@ import { usePlayerStorage } from '../hooks/usePlayerStorage';
 import { PlayerCard } from '../components/PlayerCard';
 import { AddPlayerForm } from '../components/AddPlayerForm';
 import { StatsOverview } from '../components/StatsOverview';
+import { ReportExport } from '../components/ReportExport';
 import { Toaster } from '../components/ui/toaster';
 
 const Index = () => {
@@ -14,6 +15,10 @@ const Index = () => {
     removeGoal,
     addAssist,
     removeAssist,
+    addYellowCard,
+    removeYellowCard,
+    addRedCard,
+    removeRedCard,
   } = usePlayerStorage();
 
   return (
@@ -32,6 +37,9 @@ const Index = () => {
         {/* Stats Overview */}
         <StatsOverview players={players} />
 
+        {/* Report Export */}
+        <ReportExport players={players} />
+
         {/* Add Player Form */}
         <div className="mb-8">
           <AddPlayerForm onAddPlayer={addPlayer} />
@@ -48,6 +56,10 @@ const Index = () => {
                 onRemoveGoal={removeGoal}
                 onAddAssist={addAssist}
                 onRemoveAssist={removeAssist}
+                onAddYellowCard={addYellowCard}
+                onRemoveYellowCard={removeYellowCard}
+                onAddRedCard={addRedCard}
+                onRemoveRedCard={removeRedCard}
                 onUpdateName={updatePlayerName}
                 onRemovePlayer={removePlayer}
               />

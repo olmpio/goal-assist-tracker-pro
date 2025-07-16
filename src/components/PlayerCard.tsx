@@ -3,7 +3,7 @@ import { Player } from '../types/player';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
 import { Card } from './ui/card';
-import { Plus, Minus, Edit3, Trash2, Target, Users } from 'lucide-react';
+import { Plus, Minus, Edit3, Trash2, Target, Users, AlertTriangle, Square } from 'lucide-react';
 import { useToast } from '../hooks/use-toast';
 
 interface PlayerCardProps {
@@ -12,6 +12,10 @@ interface PlayerCardProps {
   onRemoveGoal: (id: string) => void;
   onAddAssist: (id: string) => void;
   onRemoveAssist: (id: string) => void;
+  onAddYellowCard: (id: string) => void;
+  onRemoveYellowCard: (id: string) => void;
+  onAddRedCard: (id: string) => void;
+  onRemoveRedCard: (id: string) => void;
   onUpdateName: (id: string, name: string) => void;
   onRemovePlayer: (id: string) => void;
 }
@@ -22,6 +26,10 @@ export const PlayerCard = ({
   onRemoveGoal,
   onAddAssist,
   onRemoveAssist,
+  onAddYellowCard,
+  onRemoveYellowCard,
+  onAddRedCard,
+  onRemoveRedCard,
   onUpdateName,
   onRemovePlayer,
 }: PlayerCardProps) => {
@@ -120,7 +128,7 @@ export const PlayerCard = ({
         )}
       </div>
 
-      <div className="grid grid-cols-2 gap-4">
+      <div className="grid grid-cols-2 gap-4 mb-4">
         {/* Goals Section */}
         <div className="text-center">
           <div className="flex items-center justify-center gap-2 mb-2">
@@ -168,6 +176,62 @@ export const PlayerCard = ({
               variant="outline"
               size="sm"
               disabled={player.assists === 0}
+              className="flex-1"
+            >
+              <Minus className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-2 gap-4">
+        {/* Yellow Cards Section */}
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <AlertTriangle className="h-5 w-5 text-yellow-500" />
+            <span className="font-medium text-foreground">Cartão Amarelo</span>
+          </div>
+          <div className="text-3xl font-bold text-yellow-500 mb-3">{player.yellowCards}</div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => handleStatChange(() => onAddYellowCard(player.id), "Cartão amarelo! 🟨")}
+              className="bg-yellow-500 hover:bg-yellow-600 text-white flex-1"
+              size="sm"
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+            <Button
+              onClick={() => handleStatChange(() => onRemoveYellowCard(player.id), "Cartão amarelo removido")}
+              variant="outline"
+              size="sm"
+              disabled={player.yellowCards === 0}
+              className="flex-1"
+            >
+              <Minus className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* Red Cards Section */}
+        <div className="text-center">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <Square className="h-5 w-5 text-red-500" />
+            <span className="font-medium text-foreground">Cartão Vermelho</span>
+          </div>
+          <div className="text-3xl font-bold text-red-500 mb-3">{player.redCards}</div>
+          <div className="flex gap-2">
+            <Button
+              onClick={() => handleStatChange(() => onAddRedCard(player.id), "Cartão vermelho! 🟥")}
+              className="bg-red-500 hover:bg-red-600 text-white flex-1"
+              size="sm"
+            >
+              <Plus className="h-4 w-4" />
+            </Button>
+            <Button
+              onClick={() => handleStatChange(() => onRemoveRedCard(player.id), "Cartão vermelho removido")}
+              variant="outline"
+              size="sm"
+              disabled={player.redCards === 0}
               className="flex-1"
             >
               <Minus className="h-4 w-4" />

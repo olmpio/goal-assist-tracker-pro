@@ -29,6 +29,8 @@ export const usePlayerStorage = () => {
       name: name.trim(),
       goals: 0,
       assists: 0,
+      yellowCards: 0,
+      redCards: 0,
     };
     setPlayers(prev => [...prev, newPlayer]);
   };
@@ -81,6 +83,42 @@ export const usePlayerStorage = () => {
     );
   };
 
+  const addYellowCard = (id: string) => {
+    setPlayers(prev =>
+      prev.map(player =>
+        player.id === id ? { ...player, yellowCards: player.yellowCards + 1 } : player
+      )
+    );
+  };
+
+  const removeYellowCard = (id: string) => {
+    setPlayers(prev =>
+      prev.map(player =>
+        player.id === id && player.yellowCards > 0
+          ? { ...player, yellowCards: player.yellowCards - 1 }
+          : player
+      )
+    );
+  };
+
+  const addRedCard = (id: string) => {
+    setPlayers(prev =>
+      prev.map(player =>
+        player.id === id ? { ...player, redCards: player.redCards + 1 } : player
+      )
+    );
+  };
+
+  const removeRedCard = (id: string) => {
+    setPlayers(prev =>
+      prev.map(player =>
+        player.id === id && player.redCards > 0
+          ? { ...player, redCards: player.redCards - 1 }
+          : player
+      )
+    );
+  };
+
   return {
     players,
     addPlayer,
@@ -90,5 +128,9 @@ export const usePlayerStorage = () => {
     removeGoal,
     addAssist,
     removeAssist,
+    addYellowCard,
+    removeYellowCard,
+    addRedCard,
+    removeRedCard,
   };
 };

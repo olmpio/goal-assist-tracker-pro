@@ -1,6 +1,6 @@
 import { Player } from '../types/player';
 import { Card } from './ui/card';
-import { Trophy, Target, Users, TrendingUp } from 'lucide-react';
+import { Trophy, Target, Users, TrendingUp, AlertTriangle, Square } from 'lucide-react';
 
 interface StatsOverviewProps {
   players: Player[];
@@ -9,6 +9,8 @@ interface StatsOverviewProps {
 export const StatsOverview = ({ players }: StatsOverviewProps) => {
   const totalGoals = players.reduce((sum, player) => sum + player.goals, 0);
   const totalAssists = players.reduce((sum, player) => sum + player.assists, 0);
+  const totalYellowCards = players.reduce((sum, player) => sum + player.yellowCards, 0);
+  const totalRedCards = players.reduce((sum, player) => sum + player.redCards, 0);
   const totalPlayers = players.length;
   
   const topScorer = players.reduce((top, player) => 
@@ -42,6 +44,20 @@ export const StatsOverview = ({ players }: StatsOverviewProps) => {
       bgColor: "bg-accent/10",
     },
     {
+      title: "Total Cartões Amarelos",
+      value: totalYellowCards,
+      icon: AlertTriangle,
+      color: "text-yellow-500",
+      bgColor: "bg-yellow-500/10",
+    },
+    {
+      title: "Total Cartões Vermelhos",
+      value: totalRedCards,
+      icon: Square,
+      color: "text-red-500",
+      bgColor: "bg-red-500/10",
+    },
+    {
       title: "Artilheiro",
       value: topScorer ? `${topScorer.name} (${topScorer.goals})` : "Nenhum",
       icon: Trophy,
@@ -52,7 +68,7 @@ export const StatsOverview = ({ players }: StatsOverviewProps) => {
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-4 mb-6">
       {stats.map((stat, index) => (
         <Card key={index} className="football-card">
           <div className="flex items-center justify-between">
